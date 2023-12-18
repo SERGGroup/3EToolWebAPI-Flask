@@ -1,8 +1,8 @@
 from EEETools.Tools.API.ExcelAPI.modules_importer import calculate_excel
 from EEETools.Tools.API.Tools.file_handler import get_file_position
 from django.core.files.storage import FileSystemStorage
-from django.shortcuts import render, redirect
 import EEEToolApp.settings as settings
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import os
 
@@ -72,7 +72,7 @@ def clear_files(request):
 
         console_message = "ERROR IN DELETING A FILE:\nEXCEL NAME:\n{}\n\nERROR:\n{}".format(file_name, e)
 
-    return __render_home(request, console_message)
+    return __render_home(request, console_message, redirect_view=True)
 
 
 def calculate_and_download(request):
@@ -114,9 +114,17 @@ def calculate_and_download(request):
     return __render_home(request, console_text)
 
 
-def __render_home(request, console_text):
+def __render_home(request, console_text, redirect_view=False):
 
-    return render(request, 'index.html', {
+    if redirect_view:
+
+        eva_funct = redirect
+
+    else:
+
+        eva_funct = render
+
+    return eva_funct(request, 'index.html', {
 
         "console_text": console_text,
         "object_list": __get_file_list()

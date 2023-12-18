@@ -5,9 +5,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-clb1pl4fm^!*&%d0svlv-q&cd88ob2h1#-sd*h3i_m3^55=%4-'
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','eeetool-webapp.herokuapp.com', '.vercel.app']
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    'django_prometheus',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -19,6 +20,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
 
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -27,6 +29,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
 
 ]
 
